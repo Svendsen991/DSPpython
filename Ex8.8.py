@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+#   High pass chebyshev
+#   Cutoff: 3kHz
+#   Passband ripple: 1dB
+#   Sampling freq: 8000 Hz
+
+
 from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
