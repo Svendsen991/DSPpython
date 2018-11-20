@@ -39,7 +39,7 @@ Nsamples = (T / Ts) * Nbits
 
 ## Time vector
 t = np.arange(0, (Nsamples) * Ts, Ts)
-print(t)
+
 ## Carrier frequency
 fc = 2000
 
@@ -61,47 +61,74 @@ fNeg = np.multiply(np.fliplr([np.arange(0+df, (df * Nsamples / 2) + df, df)]), -
 f = np.concatenate((fNeg, f), axis = None)
 
 
-## Plot both spectrums
-fig = plt.figure()
-plt.title('Digital filter frequency response')
+## Demodulation
+i = np.multiply(v, cosfc)
+q = np.multiply(v, sinfc)
 
-plt.subplot(2,2,1)
+## Plot
+figXY = plt.figure()
+plt.title('x and y plot')
+## x plot
+plt.subplot(4,2,1)
 plt.plot(t, x, 'b')
 plt.ylabel('x', color='b')
 plt.xlabel('Tid [s]')
-
 plt.grid()
 plt.axis('tight')
-
-
-
-plt.subplot(2,2,2)
+## y plot
+plt.subplot(4,2,2)
 plt.plot(t, y, 'g')
 plt.ylabel('y', color='g')
 plt.xlabel('Tid [s]')
-
 plt.grid()
 plt.axis('tight')
-
-plt.subplot(2,2,3)
+## x frequency plot
+plt.subplot(4,2,3)
 plt.plot(f, fft.fftshift(np.abs(fft.fft(x))**2) / Nsamples**2 , 'b')
 plt.ylabel('y effekt', color='b')
 plt.xlabel('Frekvens [Hz]')
-
-
 plt.grid()
 plt.axis('tight')
-plt.xlim((-5,5))
-
-plt.subplot(2,2,4)
+#plt.xlim((-5,5))
+## y frequency plot
+plt.subplot(4,2,4)
 plt.plot(f, fft.fftshift(np.abs(fft.fft(y))**2) / Nsamples**2 , 'g')
 plt.ylabel('y effekt', color='g')
 plt.xlabel('Frekvens [Hz]')
-
 plt.grid()
 plt.axis('tight')
-plt.xlim((-5,5))
-
-
+#plt.xlim((-5,5))
+## v frequency plot
+plt.subplot(4,2,5)
+plt.plot(f, fft.fftshift(np.abs(fft.fft(v))**2) / Nsamples**2 , 'g')
+plt.ylabel('v effekt', color='g')
+plt.xlabel('Frekvens [Hz]')
+plt.grid()
+plt.axis('tight')
+## v frequency plot
+plt.subplot(4,2,6)
+plt.plot(t, v, 'g')
+plt.ylabel('v effekt', color='g')
+plt.xlabel('Frekvens [Hz]')
+plt.grid()
+plt.axis('tight')
+## i frequency plot
+plt.subplot(4,2,7)
+plt.plot(f, fft.fftshift(np.abs(fft.fft(i))**2) / Nsamples**2 , 'g')
+plt.ylabel('i effekt', color='g')
+plt.xlabel('Frekvens [Hz]')
+plt.grid()
+plt.axis('tight')
+#plt.xlim((-5,5))
+## q frequency plot
+plt.subplot(4,2,8)
+plt.plot(f, fft.fftshift(np.abs(fft.fft(q))**2) / Nsamples**2 , 'g')
+plt.ylabel('q effekt', color='g')
+plt.xlabel('Frekvens [Hz]')
+plt.grid()
+plt.axis('tight')
+#plt.xlim((-5,5))
 
 plt.show()
+
+
