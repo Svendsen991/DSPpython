@@ -61,29 +61,37 @@ fNeg = np.multiply(np.fliplr([np.arange(0+df, (df * Nsamples / 2) + df, df)]), -
 f = np.concatenate((fNeg, f), axis = None)
 
 
-## Demodulation
+## 
 i = np.multiply(v, cosfc)
 q = np.multiply(v, sinfc)
+
+hWin = signal.firwin(0.5, 100,)
+
+## lowpass hamming filter coeficients
+##hWin = [0.01496783, 0.2, 0.01496783]
+
+test1 = signal.lfilter(hWin, 1, i)
+test2 = signal.lfilter(hWin, 1, q)
 
 ## Plot
 figXY = plt.figure()
 plt.title('x and y plot')
 ## x plot
-plt.subplot(4,2,1)
+plt.subplot(5,2,1)
 plt.plot(t, x, 'b')
 plt.ylabel('x', color='b')
 plt.xlabel('Tid [s]')
 plt.grid()
 plt.axis('tight')
 ## y plot
-plt.subplot(4,2,2)
+plt.subplot(5,2,2)
 plt.plot(t, y, 'g')
 plt.ylabel('y', color='g')
 plt.xlabel('Tid [s]')
 plt.grid()
 plt.axis('tight')
 ## x frequency plot
-plt.subplot(4,2,3)
+plt.subplot(5,2,3)
 plt.plot(f, fft.fftshift(np.abs(fft.fft(x))**2) / Nsamples**2 , 'b')
 plt.ylabel('y effekt', color='b')
 plt.xlabel('Frekvens [Hz]')
@@ -91,7 +99,7 @@ plt.grid()
 plt.axis('tight')
 #plt.xlim((-5,5))
 ## y frequency plot
-plt.subplot(4,2,4)
+plt.subplot(5,2,4)
 plt.plot(f, fft.fftshift(np.abs(fft.fft(y))**2) / Nsamples**2 , 'g')
 plt.ylabel('y effekt', color='g')
 plt.xlabel('Frekvens [Hz]')
@@ -99,21 +107,21 @@ plt.grid()
 plt.axis('tight')
 #plt.xlim((-5,5))
 ## v frequency plot
-plt.subplot(4,2,5)
+plt.subplot(5,2,5)
 plt.plot(f, fft.fftshift(np.abs(fft.fft(v))**2) / Nsamples**2 , 'g')
 plt.ylabel('v effekt', color='g')
 plt.xlabel('Frekvens [Hz]')
 plt.grid()
 plt.axis('tight')
 ## v frequency plot
-plt.subplot(4,2,6)
+plt.subplot(5,2,6)
 plt.plot(t, v, 'g')
 plt.ylabel('v effekt', color='g')
 plt.xlabel('Frekvens [Hz]')
 plt.grid()
 plt.axis('tight')
 ## i frequency plot
-plt.subplot(4,2,7)
+plt.subplot(5,2,7)
 plt.plot(f, fft.fftshift(np.abs(fft.fft(i))**2) / Nsamples**2 , 'g')
 plt.ylabel('i effekt', color='g')
 plt.xlabel('Frekvens [Hz]')
@@ -121,8 +129,24 @@ plt.grid()
 plt.axis('tight')
 #plt.xlim((-5,5))
 ## q frequency plot
-plt.subplot(4,2,8)
+plt.subplot(5,2,8)
 plt.plot(f, fft.fftshift(np.abs(fft.fft(q))**2) / Nsamples**2 , 'g')
+plt.ylabel('q effekt', color='g')
+plt.xlabel('Frekvens [Hz]')
+plt.grid()
+plt.axis('tight')
+#plt.xlim((-5,5))
+## i frequency plot
+plt.subplot(5,2,9)
+plt.plot(t, test1[np.arange(0, (Nsamples), dtype=int)] , 'g')
+plt.ylabel('i effekt', color='g')
+plt.xlabel('Frekvens [Hz]')
+plt.grid()
+plt.axis('tight')
+#plt.xlim((-5,5))
+## q frequency plot
+plt.subplot(5,2,10)
+plt.plot(t, test2[np.arange(0, (Nsamples), dtype=int)], 'g')
 plt.ylabel('q effekt', color='g')
 plt.xlabel('Frekvens [Hz]')
 plt.grid()
