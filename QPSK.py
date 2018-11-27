@@ -83,7 +83,7 @@ plt.ylabel('x', color='b')
 plt.xlabel('Tid [s]')
 plt.grid()
 plt.axis('tight')
-## y plot
+## y plot'
 plt.subplot(5,2,2)
 plt.plot(t, y, 'g')
 plt.ylabel('y', color='g')
