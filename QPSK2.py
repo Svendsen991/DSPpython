@@ -13,9 +13,11 @@ import scipy.fftpack as fft
 import numpy as np
 import matplotlib.pyplot as plt
 
+## Local files
 import lowpass
+import noise
 
-a = np.add(np.multiply(2, [1,1,0,0,1,1,0,0]), -1)
+a = 2 * np.random.randint(0, 2, 8) -1
 b = np.add(np.multiply(2, [1,0,1,0,1,0,1,0]), -1)
 
 Nbits = len(a)
@@ -65,33 +67,38 @@ fNeg = np.multiply(np.fliplr([np.arange(0+df, (df * Nsamples / 2) + df, df)]), -
 ## All frequencies
 f = np.concatenate((fNeg, f), axis = None)
 
+## Add noise
+noise = noise.noise(Nsamples)
+
+v = np.add(v, noise)
 
 ## Demodulate 
 i = np.multiply(v, cosfc)
 q = np.multiply(v, sinfc)
 
+
 ## Lowpass
 test1 = lowpass.lowpass(i, Ts, fs, 1000)
 test2 = lowpass.lowpass(q, Ts, fs, 1000)
 
-
-
-plt.subplot(4,2,1)
+plt.subplot(5,2,1)
 plt.plot(x)
-plt.subplot(4,2,2)
+plt.subplot(5,2,2)
 plt.plot(y)
-plt.subplot(4,2,3)
+plt.subplot(5,2,3)
 plt.plot(t, np.multiply(x, cosfc))
-plt.subplot(4,2,4)
+plt.subplot(5,2,4)
 plt.plot(t, np.multiply(y, sinfc))
-plt.subplot(4,2,5)
+plt.subplot(5,2,5)
 plt.plot(t, i)
-plt.subplot(4,2,6)
+plt.subplot(5,2,6)
 plt.plot(t, q)
-plt.subplot(4,2,7)
-plt.plot(t, test1[np.arange(0,800)])
-plt.subplot(4,2,8)
-plt.plot(t, test2[np.arange(0,800)])
+plt.subplot(5,2,7)
+plt.plot(t, test1[np.arange(10,810)])
+plt.subplot(5,2,8)
+plt.plot(t, test2[np.arange(10,810)])
+plt.subplot(5,2,9)
+plt.plot(t, v)
 
 
 plt.show()

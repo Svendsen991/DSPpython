@@ -29,7 +29,7 @@ f = np.arange(0, fs / 2, df)
 n = np.arange(0, num_samples)
 
 ## Signal
-s = np.sin(2* np.pi * 5 * f)
+s = np.sin(2* np.pi  * f)
 
 ## White noise
 mean = 0
@@ -41,7 +41,7 @@ d = s + noise
 
 ## Filter wieghts
 w = [0.5]
-mu = 0.0002
+mu = 0.02
 y = np.zeros(num_samples)
 e = np.zeros(num_samples)
 

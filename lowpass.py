@@ -21,7 +21,7 @@ def lowpass(x, Ts, fs, fc):
     #fc = 1000 # Hz
 
     Omega = (fc / fs) * np.pi
-    M = 4
+    M = 10
 
     n = np.arange(-M, M + 1)
 
